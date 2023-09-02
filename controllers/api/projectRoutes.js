@@ -2,18 +2,6 @@ const router = require('express').Router();
 const { Project } = require('../../models');
 const withAuth = require('../../utils/auth');
 
-console.log('got here in prj rte - #1');
-
-router.get('/', withAuth, async (req, res) => {
-  try {
-    const allProjects = await Project.findAll();
-    console.log('allProjects get all = ', allProjects);
-    res.status(200).json(allProjects);
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
-
 router.post('/', withAuth, async (req, res) => {
   try {
     const newProject = await Project.create({
