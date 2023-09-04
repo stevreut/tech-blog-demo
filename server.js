@@ -15,9 +15,9 @@ const PORT = process.env.PORT || 3001;
 const hbs = exphbs.create({ helpers });
 
 const sess = {
-  secret: 'Super secret secret',
+  secret: 'Super secret secret',  // TODO - need to replace with dotenv ...
   cookie: {
-    maxAge: 300000,
+    maxAge: 300000,  // TODO - currently 300 seconds = 5 minutes, but needs reconsideration
     httpOnly: true,
     secure: false,
     sameSite: 'strict',
