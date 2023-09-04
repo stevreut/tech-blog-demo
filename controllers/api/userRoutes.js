@@ -9,6 +9,13 @@ router.get('/', async (req, res) => {
     } else if (userData.length < 1) {
       res.status(400).json({ message: 'no users on file' });  // TODO
     } else {
+      console.log('date from get all = ', userData[0]);
+      const creDate = userData[0].creationDate;
+      console.log('date = ', creDate);
+      console.log('json date = ' + JSON.stringify(creDate));
+      console.log('zone = ' + creDate.getTimezoneOffset());
+      console.log('hour = ' + creDate.getHours());
+      console.log('mins = ' + creDate.getMinutes());
       res.status(200).json(userData);
     }
   } catch (err) {

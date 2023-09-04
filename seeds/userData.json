@@ -2,16 +2,19 @@
   {
     "name": "Sal",
     "email": "sal@hotmail.com",
-    "password": "password12345"
+    "password": "password12345",
+    "creationDate": "2023-09-04T23:00:00Z"
   },
   {
     "name": "Lernantino",
     "email": "lernantino@gmail.com",
-    "password": "password12345"
+    "password": "password12345",
+    "creationDate": "2023-09-03T01:00:00Z"
   },
   {
     "name": "Amiko",
     "email": "amiko2k20@aol.com",
-    "password": "password12345"
+    "password": "password12345",
+    "creationDate": "2023-09-02T03:00:00Z"
   }
 ]
