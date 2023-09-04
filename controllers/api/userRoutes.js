@@ -1,6 +1,21 @@
 const router = require('express').Router();
 const { User } = require('../../models');
 
+router.get('/', async (req, res) => {
+  try {
+    const userData = await User.findAll();
+    if (!userData) {
+      res.status(400).json({ message: 'no users retrieved' });
+    } else if (userData.length < 1) {
+      res.status(400).json({ message: 'no users on file' });  // TODO
+    } else {
+      res.status(200).json(userData);
+    }
+  } catch (err) {
+    res.status(401).json(err);
+  };
+}); 
+
 router.post('/', async (req, res) => {
   try {
     const userData = await User.create(req.body);
