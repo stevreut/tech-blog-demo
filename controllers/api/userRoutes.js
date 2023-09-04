@@ -14,6 +14,8 @@ router.get('/', async (req, res) => {
       console.log('date = ', creDate);
       console.log('json date = ' + JSON.stringify(creDate));
       console.log('zone = ' + creDate.getTimezoneOffset());
+      console.log('month (adj) = ' + (creDate.getMonth()+1));
+      console.log('day of mon = ' + creDate.getDate());
       console.log('hour = ' + creDate.getHours());
       console.log('mins = ' + creDate.getMinutes());
       res.status(200).json(userData);
