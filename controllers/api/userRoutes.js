@@ -27,15 +27,28 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const userData = await User.create(req.body);
+    console.log('attempting new user on = ', req.body);
+    const { name, email, password } = req.body;
+    if (!(name && email && password)) {
+      res.status(400).json({message: 'missing name, email, or password'});
+    }
+    const newUser = {
+      name: name,
+      email: email,
+      password: password,
+      creationDate: new Date()
+    }
+    const userData = await User.create(newUser);
 
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
-
+      console.log('user add past session stuff');
+      console.log('new user added = ', userData);
       res.status(200).json(userData);
     });
   } catch (err) {
+    console.log('err on user add = ', JSON.stringify(err));
     res.status(400).json(err);
   }
 });
