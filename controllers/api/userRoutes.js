@@ -3,31 +3,49 @@ const { User } = require('../../models');
 
 router.get('/', async (req, res) => {
   try {
-    const userData = await User.findAll();
+    const userData = await User.findAll(
+      {
+        attributes: {
+          exclude: ['password']
+        }
+      }
+    );
     if (!userData) {
       res.status(400).json({ message: 'no users retrieved' });
     } else if (userData.length < 1) {
       res.status(400).json({ message: 'no users on file' });  // TODO
     } else {
-      console.log('date from get all = ', userData[0]);
-      const creDate = userData[0].creationDate;
-      console.log('date = ', creDate);
-      console.log('json date = ' + JSON.stringify(creDate));
-      console.log('zone = ' + creDate.getTimezoneOffset());
-      console.log('month (adj) = ' + (creDate.getMonth()+1));
-      console.log('day of mon = ' + creDate.getDate());
-      console.log('hour = ' + creDate.getHours());
-      console.log('mins = ' + creDate.getMinutes());
       res.status(200).json(userData);
     }
   } catch (err) {
     res.status(401).json(err);
   };
-}); 
+});
+
+router.get('/:id', async (req, res) => {
+  try {
+    const userData = await User.findByPk(req.params.id, 
+      {
+        attributes: {
+          exclude: ['password']
+        }
+      }
+    );
+    if (!userData) {
+      res.status(400).json({ message: 'no users retrieved' });
+    } else if (userData.length < 1) {
+      res.status(400).json({ message: 'no users on file' });  // TODO
+    } else {
+      res.status(200).json(userData);
+    }
+  } catch (err) {
+    res.status(401).json(err);
+  };
+
+})
 
 router.post('/', async (req, res) => {
   try {
-    console.log('attempting new user on = ', req.body);
     const { name, email, password } = req.body;
     if (!(name && email && password)) {
       res.status(400).json({message: 'missing name, email, or password'});
@@ -43,8 +61,6 @@ router.post('/', async (req, res) => {
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
-      console.log('user add past session stuff');
-      console.log('new user added = ', userData.get({plain:true}), '(pw='+newUser.password+')');  // TODO - for testing only
       res.status(200).json(userData);
     });
   } catch (err) {

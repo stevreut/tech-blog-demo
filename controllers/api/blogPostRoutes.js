@@ -8,13 +8,19 @@ router.get('/', async (req, res) => {
         include: [
             {
                 model: User,
+                attributes: {
+                  exclude: ['password']
+                },
                 required: false
             },
             {
                 model: Comment,
                 include: [
                     {
-                        model: User
+                        model: User,
+                        attributes: {
+                          exclude: ['password']
+                        },
                     }
                 ],
                 required: false
@@ -38,13 +44,19 @@ router.get('/:id', async (req, res) => {
         include: [
             {
                 model: User,
+                attributes: {
+                  exclude: ['password']
+                },
                 required: false
             },
             {
                 model: Comment,
                 include: [
                     {
-                        model: User
+                        model: User,
+                        attributes: {
+                          exclude: ['password']
+                        },
                     }
                 ],
                 required: false
