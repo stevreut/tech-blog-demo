@@ -51,7 +51,6 @@ router.get('/project/:id', async (req, res) => {
 
 // Use withAuth middleware to prevent access to route
 router.get('/profile', withAuth, async (req, res) => {
-  console.log('homeRoutes get /profile - req = ', req);
   try {
     // Find the logged in user based on the session ID
     const userData = await User.findByPk(req.session.user_id, {
@@ -72,9 +71,7 @@ router.get('/profile', withAuth, async (req, res) => {
 
 router.get('/login', (req, res) => {
   // If the user is already logged in, redirect the request to another route
-  console.log('homeRoutes get /login - req = ', req);
   if (req.session.logged_in) {
-    console.log('redirected to /profile from homeRoutes get /login');
     res.redirect('/profile');
     return;
   }
