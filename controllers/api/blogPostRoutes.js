@@ -64,20 +64,40 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const { title, user_id, content } = req.body;
-    const creationDate = new Date();
-    const blogPostObj = {
-      title: title,
-      user_id: user_id,
-      creationDate: creationDate,
-      content: content
+    if (!(title && user_id && content)) {
+      res.status(400).json({ message: 'missing title, user_id, or content' })
+    } else {
+      const creationDate = new Date();
+      const blogPostObj = {
+        title: title,
+        user_id: user_id,
+        creationDate: creationDate,
+        content: content
+      }
+      const blogPostData = await BlogPost.create(blogPostObj);
+      res.status(200).json(blogPostObj);
     }
-    const blogPostData = await BlogPost.create(blogPostObj);
-    res.status(200).json(blogPostObj);
   } catch (err) {
     res.status(400).message(err);
   }
+});
 
-})
+router.put('/:id', async (req, res) => {
+  try {
+    const blogUpdResult = await BlogPost.update({
+      where: {
+        id: req.params.id
+      }
+    });
+    if (!blogUpdResult[0]) {
+      res.status(404).json({message: 'no such blogpost id'});
+    } else {
+      res.status(200).json(blogUpdResult);
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 
 module.exports = router;
