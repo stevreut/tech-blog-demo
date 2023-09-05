@@ -1,0 +1,20 @@
+[
+  {
+    "user_id": 1,
+    "blogpost_id": 2,
+    "creationDate": "2023-07-04T17:33:00Z",
+    "content": "I didn't like this much"
+  },
+  {
+    "user_id": 1,
+    "blogpost_id": 1,
+    "creationDate": "2023-07-04T17:35:00Z",
+    "content": "I don't like much of anything."
+  },
+  {
+    "user_id": 3,
+    "blogpost_id": 2,
+    "creationDate": "2023-07-04T18:33:00Z",
+    "content": "I didn't like this either."
+  }
+]
