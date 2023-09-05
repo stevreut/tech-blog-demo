@@ -75,7 +75,7 @@ router.post('/', async (req, res) => {
         content: content
       }
       const blogPostData = await BlogPost.create(blogPostObj);
-      res.status(200).json(blogPostObj);
+      res.status(200).json(blogPostData);
     }
   } catch (err) {
     res.status(400).message(err);
