@@ -7,7 +7,10 @@ router.get('/', async (req, res) => {
     const commentData = await Comment.findAll({
         include: [
             {
-                model: User
+                model: User,
+                attributes: {
+                  exclude: ['password']
+                },
             },
             {
                 model: BlogPost
@@ -30,7 +33,10 @@ router.get('/:id', async (req, res) => {
     const commentData = await Comment.findByPk(req.params.id, {
         include: [
             {
-                model: User
+                model: User,
+                attributes: {
+                  exclude: ['password']
+                },
             },
             {
                 model: BlogPost
