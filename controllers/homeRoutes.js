@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { Project, User, BlogPost } = require('../models');
 const withAuth = require('../utils/auth');
+const dayjs = require('dayjs');
 
 router.get('/', async (req, res) => {
   try {
@@ -16,7 +17,12 @@ router.get('/', async (req, res) => {
     // // Serialize data so the template can read it
     // const projects = projectData.map((project) => project.get({ plain: true }));
 
-    const blogPosts = blogPostData.map((post) => post.get({plain: true}));
+    let blogPosts = blogPostData.map((post) => post.get({plain: true}));
+    blogPosts.forEach((post) => {
+      post.formattedDate = dayjs(post.creationDate).format('MM/DD/YYYY');
+    });
+
+    console.log('asdf = ', blogPosts[0].formattedDate);
 
     // Pass serialized data and session flag into template
     res.render('homepage', { 

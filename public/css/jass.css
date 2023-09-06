@@ -420,12 +420,14 @@ button {
 }
 
 a {
-  color: #1b89bc;
+  /* color: #1b89bc; */
+  color: #888888;
   text-decoration: none;
 }
 
 a:hover {
-  color: #065b83;
+  /* color: #065b83; */
+  color: #151932;
   text-decoration: underline;
 }
 
