@@ -22,8 +22,6 @@ router.get('/', async (req, res) => {
       post.formattedDate = dayjs(post.creationDate).format('MM/DD/YYYY');
     });
 
-    console.log('asdf = ', blogPosts[0].formattedDate);
-
     // Pass serialized data and session flag into template
     res.render('homepage', { 
       blogPosts, 
@@ -34,25 +32,44 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/project/:id', async (req, res) => {
+router.get('/blogpost/:id', async (req, res) => {
   try {
-    const projectData = await Project.findByPk(req.params.id, {
-      include: [
-        {
-          model: User,
-          attributes: ['name'],
-        },
-      ],
+    console.log('get home pb post id = "' + req.params.id + '"');
+    const blogPostData = await BlogPost.findByPk(req.params.id, {
+        include: [
+            {
+                model: User,
+                attributes: {
+                  exclude: ['password', 'email']
+                },
+                required: false
+            },
+            {
+                model: Comment,
+                include: [
+                    {
+                        model: User,
+                        attributes: {
+                          exclude: ['password', 'email']
+                        },
+                    }
+                ],
+                required: false
+            }
+        ]
     });
-
-    const project = projectData.get({ plain: true });
-
-    res.render('project', {
-      ...project,
-      logged_in: req.session.logged_in
-    });
+    if (!blogPostData) {
+      res.status(404).json({ message: 'no post retrieved' });
+    } else {
+      let blogPosts = blogPostData.map((post) => post.get({plain: true}));
+      res.render('blogpost', {
+        blogPosts, 
+        logged_in: req.session.logged_in 
+      });
+      // res.status(200).json(blogPostData);
+    }
   } catch (err) {
-    res.status(500).json(err);
+    res.status(400).json(err);
   }
 });
 
